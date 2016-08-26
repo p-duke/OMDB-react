@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import cage from './nicholas-cage-stencil.svg';
+// import logo from './logo.svg';
+
 import cageface from './nick.png';
 import axios from 'axios';
 import './App.css';
@@ -16,28 +16,24 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
+
+  handleSubmit(event) {
+    event.preventDefault();
+    var form = this.refs.movieSearch.value;
     axios.get('http://www.omdbapi.com/', {
         params: {
-          s: 'terminator'
+          s: form,
+          type: 
+
         }
       })
       .then((response) => {
-        // set movies state to array of movies in response
         this.setState({movies: response.data.Search});
       })
       .catch(function (error) {
         console.log(error);
       });
   }
-  //
-  // handleSubmit(event) {
-  //   event.preventDefault();
-  //   var form =
-  //
-  // }
-
-
 
   render() {
     console.log(this.state.movies)
@@ -45,13 +41,18 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={cageface} className="App-logo" alt="logo" />
-          <h2>Welcome to OMDB!</h2>
+          <h2>Welcome to Nicks Picks!</h2>
         </div>
         <div className="App-intro">
           <section>
-            <p id="App-intro">Search for a movie!</p>
-            <form id="movie-form" onSubmit=''>
-              <input ref="" type='text' name="movie"/>
+            <h2>You need a suggestion? Nick has the best recommendations as Americas #1 premier movie star!</h2>
+            <p id="App-intro">Nick is standing by! Just put in your search below and Nick will personally hand pick your movie! (...he has nothing better to do.)</p>
+            <form id="movie-form" onSubmit={this.handleSubmit.bind(this)}>
+              <input ref="movieSearch" type='text' name="movie"/>
+              <input ref="submitButton" type="submit" value="Movie"/>
+            </form>
+            <form id="movie-form" onSubmit={this.handleSubmit.bind(this)}>
+              <input ref="movieSearch" type='text' name="movie"/>
               <input ref="submitButton" type="submit" value="Movie"/>
             </form>
           </section>
